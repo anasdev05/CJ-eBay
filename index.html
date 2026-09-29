@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>CJ → eBay | Unified Product Research Pipeline</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="deck" id="deck">
+        <section class="slide active cover">
+            <div class="eyebrow">CJ → eBay · Unified Product Research Pipeline · V13</div>
+            <h1>CJ → eBay</h1>
+            <h2>لوحة اكتشاف ومراجعة المنتجات</h2>
+            <p class="lead">مسار موحّد يجمع اكتشاف منتجات CJ، فحص الشحن، تقدير الربحية، مراجعة AI وتصنيف eBay الرسمي.
+            </p>
+            <div class="chips"><span>CJ APIs</span><span>eBay APIs</span><span>n8n</span><span>AI
+                    Review</span><span>Dashboard</span></div>
+            <div class="safety">بحث ومراجعة فقط · لا نشر، لا شراء، ولا دفع تلقائي</div>
+        </section>
+        <section class="slide">
+            <div class="num">02</div>
+            <h2>المشكلة التي يحلها المشروع</h2>
+            <div class="grid2">
+                <div>
+                    <ul>
+                        <li>البحث اليدوي يوزّع البيانات بين CJ وeBay.</li>
+                        <li>سعر المنتج وحده لا يحدد جدوى الفرصة.</li>
+                        <li>الشحن والرسوم قد تغيّر الربحية الفعلية.</li>
+                        <li>تصنيف eBay والخصائص الإلزامية تحتاج تحققًا رسميًا.</li>
+                    </ul>
+                </div>
+                <div class="problem-stack">
+                    <div>CJ<br><small>السعر · المخزون · المتغيرات</small></div><b>+</b>
+                    <div>eBay<br><small>المقارنات · التصنيف · الخصائص</small></div><b>+</b>
+                    <div>قرار البائع<br><small>مراجعة بشرية إلزامية</small></div>
+                </div>
+            </div>
+        </section>
+        <section class="slide">
+            <div class="num">03</div>
+            <h2>الحل والجانب التقني</h2>
+            <div class="cards">
+                <article><b>n8n</b>
+                    <p>ينسّق مسارًا واحدًا من الداشبورد عبر Webhook محمي.</p>
+                </article>
+                <article><b>CJ APIs</b>
+                    <p>اكتشاف المنتجات، جلب المتغيرات وحساب الشحن إلى US.</p>
+                </article>
+                <article><b>eBay APIs</b>
+                    <p>بحث القوائم النشطة ثم Category Suggestions وOfficial Aspects.</p>
+                </article>
+                <article><b>AI Review</b>
+                    <p>يقارن ملاءمة منتج CJ مع دليل eBay ولا يوافق على النشر.</p>
+                </article>
+                <article><b>Data Tables</b>
+                    <p>تحفظ الفرص والشحن والربحية ونتائج المراجعة.</p>
+                </article>
+                <article><b>Dashboard</b>
+                    <p>نقطة تشغيل محلية وعرض للنتائج وحالة المراجعة.</p>
+                </article>
+            </div>
+        </section>
+        <section class="slide">
+            <div class="num">04</div>
+            <h2>Workflow الموحّد</h2>
+            <div class="flow" dir="ltr">
+                <div>Dashboard</div><i>→</i>
+                <div>Production<br>Webhook</div><i>→</i>
+                <div>Discovery</div><i>→</i>
+                <div>Freight</div><i>→</i>
+                <div>Profitability</div><i>→</i>
+                <div>AI Review</div><i>→</i>
+                <div>eBay<br>Taxonomy</div><i>→</i>
+                <div>Dashboard<br>Results</div>
+            </div>
+            <p class="caption">كل مرحلة تسلّم المرحلة التالية بيانات مخزنة وقابلة للمراجعة، مع تخطي المرحلة عند عدم وجود
+                مرشحين مؤهلين.</p>
+            <div class="stagebar"><span>01 اكتشاف</span><span>02 شحن</span><span>03 ربحية</span><span>04 AI +
+                    Taxonomy</span></div>
+        </section>
+        <section class="slide">
+            <div class="num">05</div>
+            <h2>Inputs</h2>
+            <div class="input-list">
+                <div><strong>01</strong>
+                    <p>بيانات منتج CJ: الاسم، الفئة، السعر، المخزون والصورة.</p>
+                </div>
+                <div><strong>02</strong>
+                    <p>قوائم eBay النشطة والمقارنات السعرية ذات الصلة.</p>
+                </div>
+                <div><strong>03</strong>
+                    <p>Variant من CJ وخيارات الشحن إلى الولايات المتحدة.</p>
+                </div>
+                <div><strong>04</strong>
+                    <p>السعر الوسيط على eBay + التكلفة الواصلة لتقدير الربحية.</p>
+                </div>
+                <div><strong>05</strong>
+                    <p>قرار البائع النهائي محفوظ كـ <code>APPROVE / REJECT / PENDING</code>.</p>
+                </div>
+            </div>
+        </section>
+        <section class="slide">
+            <div class="num">06</div>
+            <h2>مراحل المعالجة</h2>
+            <div class="timeline">
+                <div><b>اكتشاف</b><span>فلترة منتجات CJ ثم مقارنة قوائم eBay النشطة.</span></div>
+                <div><b>شحن</b><span>اختيار متغير وفحص خيارات CJ إلى US وحساب Landed Cost.</span></div>
+                <div><b>ربحية</b><span>تقدير رسوم eBay والاحتياطي والربح والهامش.</span></div>
+                <div><b>AI</b><span>RELEVANT / NOT_RELEVANT / NEEDS_HUMAN_REVIEW.</span></div>
+                <div><b>Taxonomy</b><span>Category Suggestions ثم Official eBay Aspects.</span></div>
+                <div><b>تخزين</b><span>Upsert للنتائج في Data Tables للعرض والمراجعة.</span></div>
+            </div>
+        </section>
+        <section class="slide">
+            <div class="num">07</div>
+            <h2>Outputs ونتيجة النظام</h2>
+            <div class="metrics">
+                <div><b>≤ 15</b><span>الحد الأقصى لمرشحي Discovery</span></div>
+                <div><b>≤ 3</b><span>مرشحو Freight في كل مرور</span></div>
+                <div><b>≤ 3</b><span>مرشحو AI Review</span></div>
+                <div><b>PENDING</b><span>قرار البائع الافتراضي</span></div>
+            </div>
+            <div class="resultbox">
+                <h3>ما الذي يخرج من المسار؟</h3>
+                <p>فرص بحث + Freight Quote + تقدير ربحية + AI relevance + eBay Category + Required Aspects + حالة مراجعة
+                    البائع.</p><strong>النتائج فرص للمراجعة وليست Listings منشورة.</strong>
+            </div>
+            <p class="note">لا يحتوي ملف V13 على سجل Run ثابت يثبت عدد الفرص الفعلي أو مدة آخر تنفيذ؛ لذلك لم تُخترع
+                أرقام تشغيل.</p>
+        </section>
+        <section class="slide">
+            <div class="num">08</div>
+
+            <h2>صور التشغيل والخلاصة</h2>
+
+            <div class="shots-grid">
+
+                <div class="shot">
+                    <img src="img/1.webp" alt="Dashboard">
+                    <small>Dashboard</small>
+                </div>
+
+                <div class="shot">
+                    <img src="img/2.webp" alt="n8n Workflow">
+                    <small>n8n Workflow</small>
+                </div>
+
+            </div>
+
+            <div class="conclusion">
+                <b>الخلاصة</b>
+                <p>
+                    النظام يجمع الدليل السعري، الشحن، الربحية، مراجعة AI وتصنيف eBay
+                    في مسار واحد، مع إبقاء قرار النشر والشراء والدفع بيد المستخدم.
+                </p>
+            </div>
+        </section>
+    </div>
+    <div class="controls"><button id="prev">‹</button><span id="counter">1 / 8</span><button id="next">›</button><button
+            id="full">ملء الشاشة</button></div>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>
